@@ -3,9 +3,24 @@
 <head>
   <meta charset="UTF-8" />
   <title>Lettering IA</title>
+
+  <!-- Importando Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Indie+Flower&family=Rubik+Glitch&family=Bebas+Neue&family=Montserrat:wght@700&display=swap" rel="stylesheet">
+
   <style>
-    body { font-family: sans-serif; text-align: center; margin: 2em; }
-    canvas { border: 1px solid #ccc; margin-top: 1em; }
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      margin: 2em;
+    }
+    canvas {
+      border: 1px solid #ccc;
+      margin-top: 1em;
+    }
+    select, input {
+      margin: 0.5em;
+      padding: 0.5em;
+    }
   </style>
 </head>
 <body>
@@ -17,10 +32,19 @@
   <p><strong>2.</strong> Digite sua frase:</p>
   <input type="text" id="textInput" placeholder="Digite o texto..." size="40" />
 
-  <p><strong>3.</strong></p>
-  <button onclick="gerarLettering()">Gerar Lettering</button>
+  <p><strong>3.</strong> Escolha uma fonte:</p>
+  <select id="fontSelect">
+    <option value="'Pacifico', cursive">Pacifico</option>
+    <option value="'Indie Flower', cursive">Indie Flower</option>
+    <option value="'Rubik Glitch', cursive">Rubik Glitch</option>
+    <option value="'Bebas Neue', sans-serif">Bebas Neue</option>
+    <option value="'Montserrat', sans-serif">Montserrat</option>
+  </select>
 
-  <br /><canvas id="canvas" width="600" height="400"></canvas>
+  <br />
+  <button onclick="gerarLettering()">Gerar Lettering</button>
+  <br />
+  <canvas id="canvas" width="600" height="400"></canvas>
 
   <script>
     let image = null;
@@ -42,6 +66,7 @@
       const canvas = document.getElementById('canvas');
       const ctx = canvas.getContext('2d');
       const text = document.getElementById('textInput').value;
+      const font = document.getElementById('fontSelect').value;
 
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -49,7 +74,7 @@
         ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
       }
 
-      ctx.font = '40px cursive';
+      ctx.font = `40px ${font}`;
       ctx.fillStyle = 'black';
       ctx.fillText(text, 50, canvas.height - 50);
     }
