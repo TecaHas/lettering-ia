@@ -1,10 +1,58 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Lettering IA</title>
+  <style>
+    body { font-family: sans-serif; text-align: center; margin: 2em; }
+    canvas { border: 1px solid #ccc; margin-top: 1em; }
+  </style>
 </head>
 <body>
-  <h1>Lettering IA carregado com sucesso!</h1>
+  <h1>Lettering IA</h1>
+
+  <p><strong>1.</strong> Escolha uma imagem de fundo:</p>
+  <input type="file" id="imageUpload" accept="image/*" />
+
+  <p><strong>2.</strong> Digite sua frase:</p>
+  <input type="text" id="textInput" placeholder="Digite o texto..." size="40" />
+
+  <p><strong>3.</strong></p>
+  <button onclick="gerarLettering()">Gerar Lettering</button>
+
+  <br /><canvas id="canvas" width="600" height="400"></canvas>
+
+  <script>
+    let image = null;
+
+    document.getElementById('imageUpload').addEventListener('change', function (event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          image = new Image();
+          image.onload = () => gerarLettering();
+          image.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    function gerarLettering() {
+      const canvas = document.getElementById('canvas');
+      const ctx = canvas.getContext('2d');
+      const text = document.getElementById('textInput').value;
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      if (image) {
+        ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+      }
+
+      ctx.font = '40px cursive';
+      ctx.fillStyle = 'black';
+      ctx.fillText(text, 50, canvas.height - 50);
+    }
+  </script>
 </body>
 </html>
